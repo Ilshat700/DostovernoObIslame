@@ -1,4 +1,5 @@
 <resources>
     <string name="settings_title">Настройки</string>
     <string name="app_name">Достоверно об Исламе</string>
+    <string name="title_activity_about_author">AboutAuthorActivity</string>
 </resources>
