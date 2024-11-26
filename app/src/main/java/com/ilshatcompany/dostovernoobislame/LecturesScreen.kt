@@ -1,8 +1,10 @@
 package com.ilshatcompany.dostovernoobislame
 
+import android.media.AudioTrack
 import android.media.MediaPlayer
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -21,6 +23,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.ui.unit.sp
 
 
@@ -28,6 +34,30 @@ import androidx.compose.ui.unit.sp
 fun LecturesScreen() {
 
     TitleOfLecturesScreen()
+
+    Audio1()
+}
+
+
+@Composable
+fun TitleOfLecturesScreen(
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = "Лекции",
+            fontSize = 20.sp
+        )
+
+    }
+}
+
+
+@Composable
+fun Audio1() {
 
     val context = LocalContext.current
     var isPlaying by remember { mutableStateOf(false) }
@@ -47,53 +77,82 @@ fun LecturesScreen() {
         }
     }
 
-    Column(
+
+    Card(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+            .fillMaxWidth()
+            .padding(10.dp,30.dp),
+        shape = RoundedCornerShape(15.dp),
+        elevation = CardDefaults.cardElevation(10.dp)
     ) {
-        Button(
-            onClick = {
-                if (isPlaying) {
-                    mediaPlayer.pause()
-                } else {
-                    mediaPlayer.start()
+        Box {
+            Row(
+                modifier = Modifier
+//            .fillMaxSize()
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Button(
+                    onClick = {
+                        if (isPlaying) {
+                            mediaPlayer.pause()
+                        } else {
+                            mediaPlayer.start()
+                        }
+                        isPlaying = !isPlaying
+                    }
+                ) {
+                    Text(text = if (isPlaying) "Pause" else "Play")
                 }
-                isPlaying = !isPlaying
-            }
-        ) {
-            Text(text = if (isPlaying) "Pause" else "Play")
-        }
 
-        Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.width(15.dp))
 
-        Button(
-            onClick = {
-                mediaPlayer.stop()
-                mediaPlayer.prepare() // Подготовка для повторного воспроизведения
-                isPlaying = false
+                Button(
+                    onClick = {
+                        mediaPlayer.stop()
+                        mediaPlayer.prepare() // Подготовка для повторного воспроизведения
+                        isPlaying = false
+                    }
+                ) {
+                    Text(text = "Stop")
+                }
             }
-        ) {
-            Text(text = "Stop")
         }
     }
-}
 
 
-@Composable
-fun TitleOfLecturesScreen(
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center
-    ) {
-        Text(
-            text = "Лекции",
-            fontSize = 20.sp
-        )
+//    Row(
+//        modifier = Modifier
+////            .fillMaxSize()
+//            .padding(16.dp),
+//        horizontalArrangement = Arrangement.Center,
+//        verticalAlignment = Alignment.CenterVertically
+//    ) {
+//        Button(
+//            onClick = {
+//                if (isPlaying) {
+//                    mediaPlayer.pause()
+//                } else {
+//                    mediaPlayer.start()
+//                }
+//                isPlaying = !isPlaying
+//            }
+//        ) {
+//            Text(text = if (isPlaying) "Pause" else "Play")
+//        }
+//
+//        Spacer(modifier = Modifier.width(15.dp))
+//
+//        Button(
+//            onClick = {
+//                mediaPlayer.stop()
+//                mediaPlayer.prepare() // Подготовка для повторного воспроизведения
+//                isPlaying = false
+//            }
+//        ) {
+//            Text(text = "Stop")
+//        }
+//    }
 
-    }
 }

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Send
@@ -28,7 +29,8 @@ fun AppDrawer(
         DrawerItem(Icons.Default.DateRange, "Книги", "books"),
         DrawerItem(Icons.Default.ShoppingCart, "Наш магазин", "shop"),
         DrawerItem(Icons.Default.Send, "Помощь мусульманам", "help"),
-        DrawerItem(Icons.Default.Warning, "Важные правила", "rules")
+        DrawerItem(Icons.Default.Warning, "Важные правила", "rules"),
+        DrawerItem(Icons.Default.ExitToApp, "Страница регистрации", "registration")
     )
 
     ModalDrawerSheet(

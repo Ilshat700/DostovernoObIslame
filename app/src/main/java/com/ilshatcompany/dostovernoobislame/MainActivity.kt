@@ -42,6 +42,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.PlayArrow
@@ -97,7 +98,8 @@ fun NavHostController.AppDrawer(closeDrawer: () -> Unit) {
         DrawerItem(Icons.Default.DateRange, "Книги", "books"),
         DrawerItem(Icons.Default.ShoppingCart, "Наш магазин", "shop"),
         DrawerItem(Icons.Default.Send, "Помощь мусульманам", "help"),
-        DrawerItem(Icons.Default.Warning, "Важные правила", "rules")
+        DrawerItem(Icons.Default.Warning, "Важные правила", "rules"),
+        DrawerItem(Icons.Default.ExitToApp, "Страница регистрации", "registration")
     )
 
     ModalDrawerSheet {
@@ -149,6 +151,7 @@ fun NavHostContainer(navController: NavHostController, openDrawer: () -> Unit) {
                 composable("shop") { ShopScreen() }
                 composable("help") { HelpScreen() }
                 composable("rules") { RulesScreen() }
+                composable("registration") { RegistrationScreen() }
             }
         }
     }
