@@ -20,68 +20,138 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+//
+//
+//
+//
+//class MainActivity : ComponentActivity() {
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        setContent {
+//
+//            WelcomeScreen()
+//            Drawer()
+//
+//        }
+//    }
+//}
+//
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Send
+import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material3.*
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import kotlinx.coroutines.launch
 
-
+// Screens import
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-
-            WelcomeScreen()
-            Drawer()
-
+            AppWithNavigation()
         }
     }
 }
 
 @Composable
-fun WelcomeScreen() {
+fun AppWithNavigation() {
+    val navController = rememberNavController()
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(20.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
+    ModalNavigationDrawer(
+        drawerState = drawerState,
+        drawerContent = {
+            AppDrawer(
+                navController = navController,
+                closeDrawer = { scope.launch { drawerState.close() } }
+            )
+        }
     ) {
-        Text(
-            text = "Ассаляму `алейкум",
-            fontSize = 20.sp
-        )
-        Spacer(modifier = Modifier.height(5.dp))
-        Divider(
-            Modifier.width(220.dp),
-            color = Color.LightGray,
-            thickness = 3.dp
-        )
-        Spacer(modifier = Modifier.height(10.dp))
-        Text(
-            text = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean " +
-                    "commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus " +
-                    "et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis," +
-                    " ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa " +
-                    "quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget," +
-                    " arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo." +
-                    " Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras" +
-                    " dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus." +
-                    " Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. " +
-                    "Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus " +
-                    "viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet." +
-                    " Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. " +
-                    "Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum " +
-                    "rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum." +
-                    " Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. " +
-                    "Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut " +
-                    "libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget " +
-                    "eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh." +
-                    " Donec sodales sagittis magna. ",
-            textAlign = TextAlign.Center,
-        )
+        NavHostContainer(
+            navController = navController,
+            openDrawer = { scope.launch { drawerState.open() } })
     }
 }
 
+@Composable
+fun NavHostController.AppDrawer(closeDrawer: () -> Unit) {
+    val items = listOf(
+        DrawerItem(Icons.Default.Info, "Об авторе", "about"),
+        DrawerItem(Icons.Default.PlayArrow, "Лекции", "lectures"),
+        DrawerItem(Icons.Default.Edit, "Посты", "posts"),
+        DrawerItem(Icons.Default.DateRange, "Книги", "books"),
+        DrawerItem(Icons.Default.ShoppingCart, "Наш магазин", "shop"),
+        DrawerItem(Icons.Default.Send, "Помощь мусульманам", "help"),
+        DrawerItem(Icons.Default.Warning, "Важные правила", "rules")
+    )
 
+    ModalDrawerSheet {
+        items.forEach { item ->
+            NavigationDrawerItem(
+                label = { Text(item.title) },
+                selected = false,
+                icon = {
+                    Icon(imageVector = item.imageVector, contentDescription = item.title)
+                },
+                onClick = {
+                    navigate(item.route) {
+                        launchSingleTop = true
+                    }
+                    closeDrawer()
+                },
+                modifier = Modifier.padding(10.dp)
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun NavHostContainer(navController: NavHostController, openDrawer: () -> Unit) {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Достоверно об Исламе") },
+                navigationIcon = {
+                    IconButton(onClick = openDrawer) {
+                        Icon(Icons.Default.Menu, contentDescription = "Меню")
+                    }
+                }
+            )
+        }
+    ) { innerPadding ->
+        Box(
+            modifier = Modifier.padding(innerPadding)
+        ) {
+            NavHost(
+                navController = navController,
+                startDestination = "rules"
+            ) {
+                composable("about") { AboutScreen() }
+                composable("lectures") { LecturesScreen() }
+                composable("posts") { PostsScreen() }
+                composable("books") { BooksScreen() }
+                composable("shop") { ShopScreen() }
+                composable("help") { HelpScreen() }
+                composable("rules") { RulesScreen() }
+            }
+        }
+    }
+}
 
 
