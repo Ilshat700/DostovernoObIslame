@@ -81,78 +81,52 @@ fun Audio1() {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(10.dp,30.dp),
+            .padding(10.dp, 30.dp),
         shape = RoundedCornerShape(15.dp),
         elevation = CardDefaults.cardElevation(10.dp)
     ) {
-        Box {
-            Row(
+        Box(
+            modifier = Modifier.fillMaxWidth(),
+            contentAlignment = Alignment.Center
+        ) {
+            Column(
                 modifier = Modifier
-//            .fillMaxSize()
                     .padding(16.dp),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             ) {
-                Button(
-                    onClick = {
-                        if (isPlaying) {
-                            mediaPlayer.pause()
-                        } else {
-                            mediaPlayer.start()
+
+                Text(text = "Детям об испытаниях")
+
+                Row {
+                    Button(
+                        onClick = {
+                            if (isPlaying) {
+                                mediaPlayer.pause()
+                            } else {
+                                mediaPlayer.start()
+                            }
+                            isPlaying = !isPlaying
                         }
-                        isPlaying = !isPlaying
+                    ) {
+                        Text(text = if (isPlaying) "Pause" else "Play")
                     }
-                ) {
-                    Text(text = if (isPlaying) "Pause" else "Play")
+
+                    Spacer(modifier = Modifier.width(15.dp))
+
+                    Button(
+                        onClick = {
+                            mediaPlayer.stop()
+                            mediaPlayer.prepare() // Подготовка для повторного воспроизведения
+                            isPlaying = false
+                        }
+                    ) {
+                        Text(text = "Stop")
+                    }
                 }
 
-                Spacer(modifier = Modifier.width(15.dp))
-
-                Button(
-                    onClick = {
-                        mediaPlayer.stop()
-                        mediaPlayer.prepare() // Подготовка для повторного воспроизведения
-                        isPlaying = false
-                    }
-                ) {
-                    Text(text = "Stop")
-                }
             }
         }
     }
-
-
-//    Row(
-//        modifier = Modifier
-////            .fillMaxSize()
-//            .padding(16.dp),
-//        horizontalArrangement = Arrangement.Center,
-//        verticalAlignment = Alignment.CenterVertically
-//    ) {
-//        Button(
-//            onClick = {
-//                if (isPlaying) {
-//                    mediaPlayer.pause()
-//                } else {
-//                    mediaPlayer.start()
-//                }
-//                isPlaying = !isPlaying
-//            }
-//        ) {
-//            Text(text = if (isPlaying) "Pause" else "Play")
-//        }
-//
-//        Spacer(modifier = Modifier.width(15.dp))
-//
-//        Button(
-//            onClick = {
-//                mediaPlayer.stop()
-//                mediaPlayer.prepare() // Подготовка для повторного воспроизведения
-//                isPlaying = false
-//            }
-//        ) {
-//            Text(text = "Stop")
-//        }
-//    }
 
 }

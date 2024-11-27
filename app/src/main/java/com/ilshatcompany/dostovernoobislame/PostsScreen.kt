@@ -62,7 +62,10 @@ private fun ListItem(name: String, prof: String) {
                     painter = painterResource(id = R.drawable.dostoverno_ob_islame512),
                     contentDescription = "image",
                     contentScale = ContentScale.Crop,
-                    modifier = Modifier.padding(5.dp).size(64.dp).clip(CircleShape)
+                    modifier = Modifier
+                        .padding(5.dp)
+                        .size(64.dp)
+                        .clip(CircleShape)
                 )
             }
         }
