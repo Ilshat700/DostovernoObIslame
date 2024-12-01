@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,7 +25,8 @@ fun RulesScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(20.dp),
+            .padding(20.dp)
+            .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -49,6 +52,11 @@ fun RulesScreen() {
                     " dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus." +
                     " Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. " +
                     "Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus " +
+                    "viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet." +
+                    " Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. " +
+                    "Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum " +
+                    "rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum." +
+                    " Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. " +
                     "viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet." +
                     " Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. " +
                     "Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum " +
